@@ -21,6 +21,19 @@ cout << "Unknown Name\n";
 continue;
 }
 }
+while (true) {
+    cout << "Enter PIN: ";
+    cin >> pin;
+    if (pin == 1234) {
+        cout << "Success\n";
+        break;
+    }
+    else {
+        system("cls");
+        cout << "Invalid PIN\n";
+        continue;
+    }
+}
 }
 
 void deposit(){
@@ -73,7 +86,7 @@ cout << "[1] Deposit\n[2] Withdraw\n[3] Balance\n[4] Exit\n";
 cout << "Input: ";
 cin >> choice;
 
-switch (choice)
+switch (choice){
 
 case 1: deposit(); break;
 case 2: withdraw(); break;
@@ -82,6 +95,7 @@ case 4: exit(1); break;
 default:
 system("cls");
 cout << "Invalid Choice\n";
+}
 }
 
 int main() {
