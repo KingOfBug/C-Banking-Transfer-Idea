@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <windows.h>
 using namespace std;
 
 float accBal;
@@ -7,102 +8,124 @@ int pin;
 string accName;
 float amount;
 
-void login() {
-while (true) {
-cout << "Enter Name: ";
-getline (cin, accName);
-if (accName == "Bug"){
-cout << "Welcome" << endl;
-break;
-} 
-else {
-system("cls");
-cout << "Unknown Name\n";
-continue;
+void cyan() {
+    HANDLE h= GetStdHandle (STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(h,11);
 }
+
+void red() {
+    HANDLE h= GetStdHandle (STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(h,12);
 }
-while (true) {
-    cout << "Enter PIN: ";
-    cin >> pin;
-    if (pin == 1234) {
-        cout << "Success\n";
+
+void green() {
+    HANDLE h= GetStdHandle (STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(h,2);
+}
+
+void yellow() {
+    HANDLE h= GetStdHandle (STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(h,6);
+}
+
+void login () {
+    while(true){
+    cout << "Enter Name: ";
+    getline(cin, accName);
+    if(accName == "Joshua"){
         break;
     }
     else {
         system("cls");
-        cout << "Invalid PIN\n";
+        cout << "Unknown Name\n";
         continue;
     }
-}
+    }
+    while (true) {
+        system("cls");
+        cout << "Enter PIN: ";
+        cin >> pin;
+        if (pin == 1234) {
+            cout << "Successfully Log In\n";
+            break;
+        }
+        else {
+            system("cls");
+            cout << "Invalid PIN\n";
+            continue;
+        }
+    }
 }
 
-void deposit(){
-while (true){
-system("cls");
-cout << "Deposit: ";
-cin >> amount;
-if(amount > 0){
-accBal += amount;
-break;
+void deposit() {
+    while(true) {
+    system("cls");
+    cout << "Deposit: ";
+    cin >> amount;
+    if(amount > 0){
+    accBal += amount;
+    break;
 }
 else {
-system("cls");
-cout << "Invalid Amount" << endl;
-continue;
+    system("cls");
+    cout << "Invalid Amount\n";
+    continue;
 }
 }
 amount = 0;
 }
 
 void withdraw() {
-while(true){
-system("cls");
-cout << "Withdraw: ";
-cin >> amount;
-if(amount < accBal && accBal > amount){
-cout << "Successfully";
-break;
+    red();
+    while(true){
+        system("cls");
+        cout << "Withdraw: ";
+        cin >> amount;
+        if (accBal > amount && amount < accBal){
+            accBal -= amount;
+            break;
+        }
+        else {
+            system("cls");
+            cout << "Not Enough Balance\n";
+        }
+    }
+    amount = 0;
 }
-else {
-system("cls");
-cout << "Not Enough Balance\n";
-continue;
-}
-}
-amount = 0;
-}
+
 
 void balance() {
-system("cls");
-cout << "Name: " << accName << endl;
-cout << "Balance: " << accBal << endl;
+    system("cls");
+    cout << "Name: " << accName << endl;
+    cout << "Balance: " << accBal << endl;
 }
 
-void menu() {
-int choice;
-system("cls");
-cout << "Welcome To KingOfBug Company\n";
-cout << "[1] Deposit\n[2] Withdraw\n[3] Balance\n[4] Exit\n";
-cout << "Input: ";
-cin >> choice;
-
-switch (choice){
-
-case 1: deposit(); break;
-case 2: withdraw(); break;
-case 3: balance(); break;
-case 4: exit(1); break;
-default:
-system("cls");
-cout << "Invalid Choice\n";
-}
+void menu(){
+    yellow();
+    int choice;
+    while(true){
+        cout << "Welcome\n";
+        cout << "1. Deposit\n2. Withdraw\n3. Balance\n3. Exit\n";
+        cout << "Input: ";
+        cin >> choice;
+        
+        switch(choice){
+            case 1: deposit(); break;
+            case 2: withdraw(); break;
+            case 3: balance(); break;
+            case 4: exit(1); break;
+            default: 
+            system("cls");
+            cout << "Invalid Choice\n";
+            continue;
+        }
+    }
 }
 
 int main() {
-
-login();
-deposit();
-menu();
-
-return 0;
+    cyan();
+    login();
+    green();
+    deposit();
+    menu();
 }
